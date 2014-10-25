@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tooliveapp.MainActivity" >
+    
+    <item android:id="@+id/action_venue_name"
+          android:title="@string/menu_venue_name"
+          app:showAsAction="always" />
+
+    <item android:id="@+id/action_venue_info"
+          android:icon="@android:drawable/ic_menu_info_details"
+          android:title="@string/menu_venue_info"
+          app:showAsAction="always" />
+
+</menu>
