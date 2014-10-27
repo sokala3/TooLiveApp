@@ -6,4 +6,5 @@ public class Routing
 	public static final String AUTHORIZATION = "Auth";
 	public static final String LOGIN = "/login";
 	public static final String CATEGORY = "/categories";
+	public static final String FEED = "/feed";
 }

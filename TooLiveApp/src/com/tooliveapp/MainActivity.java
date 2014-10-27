@@ -1,7 +1,10 @@
 package com.tooliveapp;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.tooliveapp.fragments.CategoriesFragment;
-import com.tooliveapp.fragments.EventsFragment;
+import com.tooliveapp.fragments.FeedFragment;
 import com.tooliveapp.globals.Constants;
 
 import android.app.Activity;
@@ -10,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -29,6 +33,7 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private int currentSection = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,30 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+        .cacheInMemory(true)
+        .cacheOnDisk(true)
+        .build();
+        
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+        	.defaultDisplayImageOptions(options)
+        	.build();
+        
+        ImageLoader.getInstance().init(config);
+    }
+    
+    @Override
+    public void onBackPressed() 
+    {
+    	if(mNavigationDrawerFragment.isDrawerOpen())
+    	{
+    		mNavigationDrawerFragment.closeDrawer();
+    	}
+    	else
+    	{
+    		super.onBackPressed();
+    	}
     }
 
     @Override
@@ -51,14 +80,25 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment frag = PlaceholderFragment.newInstance(position + 1);
         
-        if(position + 1 == 2)
+        if(currentSection != position)
         {
-        	frag = CategoriesFragment.newInstance(2);
+	        if(position == 0)
+	        {
+	        	frag = FeedFragment.newInstance(1);
+	        }
+	        
+	        if(position == 1)
+	        {
+	        	frag = CategoriesFragment.newInstance(2);
+	        }
+	        
+	        fragmentManager.beginTransaction()
+            .replace(R.id.container, frag)
+            .addToBackStack(null)
+            .commit();
         }
         
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, frag)
-                .commit();
+        currentSection = position;
     }
 
     public void onSectionAttached(int number) {
@@ -151,5 +191,4 @@ public class MainActivity extends ActionBarActivity
                     getArguments().getInt(Constants.ARG_SECTION_NUMBER));
         }
     }
-
 }

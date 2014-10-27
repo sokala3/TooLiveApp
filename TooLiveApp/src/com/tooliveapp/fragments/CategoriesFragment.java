@@ -59,7 +59,9 @@ public class CategoriesFragment extends Fragment
             	FragmentTransaction trans = getFragmentManager()
 						.beginTransaction();
             	
-            	trans.replace(R.id.container, EventsFragment.newInstance(2));
+            	Category model = (Category) myListView.getItemAtPosition(position);
+            	
+            	trans.replace(R.id.container, VenueListFragment.newInstance(model.getCategoryID()));
             	trans.addToBackStack(null);
             	trans.commit();
             }
