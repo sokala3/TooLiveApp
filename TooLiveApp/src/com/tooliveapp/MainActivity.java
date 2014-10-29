@@ -116,6 +116,10 @@ public class MainActivity extends ActionBarActivity
             	mTitle = getString(R.string.title_section_live_points);
                 break;
         }
+        
+        currentSection = number - 1;
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(mTitle);
     }
 
     public void restoreActionBar() {

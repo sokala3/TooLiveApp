@@ -72,15 +72,11 @@ public class CategoriesFragment extends Fragment
         HttpTaskGet task = new HttpTaskGet();
         task.execute(url);
         
+        ((MainActivity)getActivity()).onSectionAttached(
+                getArguments().getInt(Constants.ARG_SECTION_NUMBER));
+        
         
         return rootView;
-    }
-    
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(
-                getArguments().getInt(Constants.ARG_SECTION_NUMBER));
     }
 	
 	private class HttpTaskGet extends AsyncTask<String, String, String>
